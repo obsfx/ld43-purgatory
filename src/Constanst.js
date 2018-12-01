@@ -34,5 +34,5 @@ const config = {
         gamepad: false
     },
     pixelArt: true,
-    antialias: false
+    antialias: true
 };

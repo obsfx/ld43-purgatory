@@ -54,7 +54,7 @@ let Helper = {
     createArenaGraphics: function() {
         colors = this.getColors();
         let graphics = game.add.graphics(0, 0);
-        
+
         let circleA = game.add.graphics(0, 0);
         circleA.inputEnabled = true;
         circleA.input.useHandCursor = true;
@@ -68,52 +68,80 @@ let Helper = {
         circleC.input.useHandCursor = true;
 
         let rndColors = colors[game.rnd.between(0, colors.length - 1)];
-
         game.stage.backgroundColor = rndColors.bg;
-        graphics.clear();
 
-        graphics.beginFill(rndColors.c, 0.2);
-        graphics.drawCircle(150, 300, 20);
-        graphics.endFill();
+        let points = [
+            
+            // purgatory:
+            {
+                x: 150,
+                y: 300,
+                r: 20,
+                g: graphics,
+                o: 0.2,
+                text: "P U R G A T O R Y"
+            },
 
-        graphics.lineStyle(3, rndColors.l, 0.8);
-        graphics.moveTo(160, 300);
-        graphics.lineTo(195, 300);
-        graphics.lineStyle(0, rndColors.l, 1);
-        graphics.endFill();
+            // arenaA:
+            {
+                x: 220,
+                y: 300,
+                r: 50,
+                g: circleA,
+                o: 0.4,
+                text: "A R E N A  I"
+            },
 
-        circleA.beginFill(rndColors.c, 0.4);
-        circleA.drawCircle(220, 300, 50);
-        circleA.endFill();
+            // arenaB:
+            {
+                x: 300,
+                y: 300,
+                r: 50,
+                g: circleB,
+                o: 0.6,
+                text: "A R E N A  II"
+            },
 
-        graphics.lineStyle(3, rndColors.l, 0.85);
-        graphics.moveTo(245, 300);
-        graphics.lineTo(275, 300);
-        graphics.lineStyle(0, rndColors.l, 1);
-        graphics.endFill();
+            // arenaC: 
+            {
+                x: 380,
+                y: 300,
+                r: 50, 
+                g: circleC,
+                o: 0.8,
+                text: "A R E N A  III"
+            },
 
-        circleB.beginFill(rndColors.c, 0.6);
-        circleB.drawCircle(300, 300, 50);
-        circleB.endFill();
+            // heaven:
+            {
+                x: 450,
+                y: 300,
+                r: 20,
+                g: graphics,
+                o: 1,
+                text: "H E A V E N"
+            }
+        ];
 
-        graphics.lineStyle(3, rndColors.l, 0.9);
-        graphics.moveTo(325, 300);
-        graphics.lineTo(355, 300);
-        graphics.lineStyle(0, rndColors.l, 1);
-        graphics.endFill();
+        for (let i = 0; i < points.length - 1; i++) {
+            graphics.lineStyle(3, rndColors.l, 0.5 + ((i + 1) / 10));
+            graphics.moveTo(points[i].x + points[i].r / 2, 300);
+            graphics.lineTo(points[i + 1].x - points[i + 1].r / 2, 300);
+            graphics.lineStyle(0, rndColors.l, 1);
+            graphics.endFill();
+        }
 
-        circleC.beginFill(rndColors.c, 0.8);
-        circleC.drawCircle(380, 300, 50);
-        circleC.endFill();
+        for (let i in points) {
+            points[i].g.beginFill(rndColors.c, points[i].o);
+            points[i].g.drawCircle(points[i].x, points[i].y, points[i].r);
+            points[i].g.endFill();
+        }
 
-        graphics.lineStyle(3, rndColors.l, 0.95);
-        graphics.moveTo(405, 300);
-        graphics.lineTo(440, 300);
-        graphics.lineStyle(0, rndColors.l, 1);
-        graphics.endFill();
+        for (let i in points) {
+            let label = game.add.text(points[i].x, points[i].y + points[i].r / 1.5 + 10, points[i].text, { font: '12px Slabo', fill: '#fff'});
+            label.x = points[i].x - label.width / 2;
+        }
 
-        graphics.beginFill(rndColors.c, 1);
-        graphics.drawCircle(450, 300, 20);
-        graphics.endFill();
+        /****** */
     }
 }

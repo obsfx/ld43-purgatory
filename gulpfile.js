@@ -1,14 +1,20 @@
 var gulp = require('gulp');  
 var concat = require('gulp-concat');
 
+var paths = [
+  './src/*.js', 
+  './src/gameplay/*.js',
+  './src/states/*.js'
+]
+
 gulp.task( 'default', [ 'scripts' ], function () {
-    gulp.watch(['./src/*.js', './src/gameplay/*.js'], function() {
+    gulp.watch(paths, function() {
       gulp.run('scripts');
   });
 });
 
 gulp.task('scripts', function() {
-  gulp.src(['./src/*.js', './src/gameplay/*.js'])
+  gulp.src(paths)
     .pipe(concat('game.js'))
     .pipe(gulp.dest('./build/'))
 });

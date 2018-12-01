@@ -12,6 +12,13 @@ const Screen = {
 
 const AssetsPath = {
     Preloads: [
+        {type: "spritesheet", key: "PlayerSprite", path: `${AssetsDir}/units/playerSprite.png`, w: 64, h: 64, f: 9},
+        {type: "spritesheet", key: "ObjectiveSprite", path: `${AssetsDir}/units/objectiveSprite.png`, w: 64, h: 64, f: 10},
+        {type: "spritesheet", key: "EnemySprite", path: `${AssetsDir}/units/enemySprite.png`, w: 64, h: 64, f: 10},
+        {type: "image", key: "PlayerTail", path: `${AssetsDir}/units/tail.png`},
+        {type: "image", key: "PlayerBullet", path: `${AssetsDir}/units/bullet.png`},
+        {type: "image", key: "EnemyBullet", path: `${AssetsDir}/units/enemyBullet.png`},
+        {type: "image", key: "bg", path: `${AssetsDir}/temp.png`}
     ]
 }
 

@@ -2,7 +2,6 @@
 
 var game = new Phaser.Game(config);
 function run() {
-
     game.state.add("Boot", Boot);
     game.state.add("Preload", Preload);
     game.state.add("MainMenu", MainMenu);

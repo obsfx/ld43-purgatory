@@ -54,9 +54,23 @@ let Helper = {
     createArenaGraphics: function() {
         colors = this.getColors();
         let graphics = game.add.graphics(0, 0);
+        
+        let circleA = game.add.graphics(0, 0);
+        circleA.inputEnabled = true;
+        circleA.input.useHandCursor = true;
+
+        let circleB = game.add.graphics(0, 0);
+        circleB.inputEnabled = true;
+        circleB.input.useHandCursor = true;
+        
+        let circleC = game.add.graphics(0, 0);
+        circleC.inputEnabled = true;
+        circleC.input.useHandCursor = true;
+
         let rndColors = colors[game.rnd.between(0, colors.length - 1)];
 
         game.stage.backgroundColor = rndColors.bg;
+        graphics.clear();
 
         graphics.beginFill(rndColors.c, 0.2);
         graphics.drawCircle(150, 300, 20);
@@ -68,9 +82,9 @@ let Helper = {
         graphics.lineStyle(0, rndColors.l, 1);
         graphics.endFill();
 
-        graphics.beginFill(rndColors.c, 0.4);
-        graphics.drawCircle(220, 300, 50);
-        graphics.endFill();
+        circleA.beginFill(rndColors.c, 0.4);
+        circleA.drawCircle(220, 300, 50);
+        circleA.endFill();
 
         graphics.lineStyle(3, rndColors.l, 0.85);
         graphics.moveTo(245, 300);
@@ -78,9 +92,9 @@ let Helper = {
         graphics.lineStyle(0, rndColors.l, 1);
         graphics.endFill();
 
-        graphics.beginFill(rndColors.c, 0.6);
-        graphics.drawCircle(300, 300, 50);
-        graphics.endFill();
+        circleB.beginFill(rndColors.c, 0.6);
+        circleB.drawCircle(300, 300, 50);
+        circleB.endFill();
 
         graphics.lineStyle(3, rndColors.l, 0.9);
         graphics.moveTo(325, 300);
@@ -88,9 +102,9 @@ let Helper = {
         graphics.lineStyle(0, rndColors.l, 1);
         graphics.endFill();
 
-        graphics.beginFill(rndColors.c, 0.8);
-        graphics.drawCircle(380, 300, 50);
-        graphics.endFill();
+        circleC.beginFill(rndColors.c, 0.8);
+        circleC.drawCircle(380, 300, 50);
+        circleC.endFill();
 
         graphics.lineStyle(3, rndColors.l, 0.95);
         graphics.moveTo(405, 300);

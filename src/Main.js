@@ -6,6 +6,7 @@ function run() {
     game.state.add("Preload", Preload);
     game.state.add("MainMenu", MainMenu);
     game.state.add("MainState", MainState);
+    game.state.add("ArenaSelection", ArenaSelection);
 
     console.log("game init");
 

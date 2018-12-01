@@ -21,6 +21,7 @@ let Preload = {
 
     create: function() {
         console.log("game preload");
-        game.state.start("MainMenu");
+        //game.state.start("MainMenu");
+        game.state.start("ArenaSelection");
     }
 }

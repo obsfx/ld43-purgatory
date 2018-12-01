@@ -3,10 +3,10 @@ let Enemy = function (x, y) {
 
     this.acc = {
         a: 400,
-        b: 1000
+        b: 800
     };
 
-    this.bulletVel = 200;
+    this.bulletVel = 250;
 
     this.playerLastSeen = null;
     this.lookForPlayerRadius = 250;
@@ -60,11 +60,16 @@ Enemy.prototype.shoot = function() {
     let bullet = this.bullets.getFirstDead();
     bullet.reset(this.x, this.y);
     
-    game.time.events.add(Phaser.Timer.SECOND * game.rnd.between(4, 8), function() {
-        bullet.kill();
+    game.time.events.add(Phaser.Timer.SECOND * game.rnd.between(3, 5), function() {
+        let tween = game.add.tween(bullet).to( { alpha: 0 }, 300, "Linear", true);
+        bullet.enableBody = false;
+        tween.onComplete.add(function() {
+            bullet.alpha = 1;
+            bullet.enableBody = true;
+            bullet.kill();
+        }, this)
     }, this);
 
     this.bulletQueue.push(bullet);
-
     game.time.events.add(Phaser.Timer.SECOND * game.rnd.between(4, 8), this.shoot, this);
 }

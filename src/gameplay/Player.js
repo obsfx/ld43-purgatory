@@ -2,7 +2,7 @@ let Player = function () {
     Phaser.Sprite.call(this, game, game.world.centerX, game.world.centerY, "PlayerSprite", 1);
 
     this.vel = 250;
-    this.tailVel = 150;
+    this.tailVel = 160;
     this.fireRate = 150;
     this.nextFire = 0;
 
@@ -77,7 +77,7 @@ Player.prototype.update = function() {
     }
 
     game.physics.arcade.moveToObject(this, this.ghost, this.vel, this.vel * 1.2, this.vel * 1.2);
-    game.physics.arcade.moveToObject(this.tail, this, this.tailVel, this.tailVel * 2, this.tailVel * 2);
+    game.physics.arcade.moveToObject(this.tail, this, this.tailVel, this.tailVel * 1.2, this.tailVel * 1.2);
 }
 
 Player.prototype.fire = function() {
@@ -86,5 +86,6 @@ Player.prototype.fire = function() {
         let bullet = this.bullets.getFirstDead();
         bullet.reset(this.tail.x + 3, this.tail.y + 3);
         game.physics.arcade.moveToPointer(bullet, this.vel * 2);
+        game.camera.shake(0.015, 40);
     }
 }

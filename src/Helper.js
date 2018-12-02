@@ -2,9 +2,9 @@ let Helper = {
     
     getColors: function() {
         return [
-            {l: 0x2f434c, c: 0xB2ABF2, bg: 0x1C3041},
-            {l: 0xECE4B7, c: 0x95BF74, bg: 0x283F3B},
-            {l: 0x2f434c, c: 0xD5F2E3, bg: 0x1C3041},
+            {l: 0xC0E5C8, c: 0x694873, bg: 0x112320},
+            {l: 0xAFA060, c: 0x764134, bg: 0x140C0F},
+            {l: 0xBED558, c: 0x756D54, bg: 0x1E171A},
             {l: 0xE9E6FF, c: 0x73683B, bg: 0x13262F},
             {l: 0xD0E37F, c: 0xD1603D, bg: 0x221D23},
         ]
@@ -79,7 +79,8 @@ let Helper = {
                 r: 20,
                 g: graphics,
                 o: 0.2,
-                text: "P U R G A T O R Y"
+                text: "P U R G A T O R Y",
+                ts: 10
             },
 
             // arenaA:
@@ -89,7 +90,8 @@ let Helper = {
                 r: 50,
                 g: circleA,
                 o: 0.4,
-                text: "A R E N A  I"
+                text: "A R E N A  I",
+                ts: 12,
             },
 
             // arenaB:
@@ -99,7 +101,8 @@ let Helper = {
                 r: 50,
                 g: circleB,
                 o: 0.6,
-                text: "A R E N A  II"
+                text: "A R E N A  II",
+                ts: 12,
             },
 
             // arenaC: 
@@ -109,7 +112,8 @@ let Helper = {
                 r: 50, 
                 g: circleC,
                 o: 0.8,
-                text: "A R E N A  III"
+                text: "A R E N A  III",
+                ts: 12,
             },
 
             // heaven:
@@ -119,7 +123,8 @@ let Helper = {
                 r: 20,
                 g: graphics,
                 o: 1,
-                text: "H E A V E N"
+                text: "H E A V E N",
+                ts: 10
             }
         ];
 
@@ -131,17 +136,70 @@ let Helper = {
             graphics.endFill();
         }
 
+        function hover(p, o, c) {
+            p.g.clear();
+            p.g.beginFill(c, o);
+            p.g.drawCircle(p.x, p.y, p.r);
+            p.g.endFill();
+        }
+
         for (let i in points) {
             points[i].g.beginFill(rndColors.c, points[i].o);
             points[i].g.drawCircle(points[i].x, points[i].y, points[i].r);
             points[i].g.endFill();
-        }
+            
+            points[i].g.events.onInputOver.add(function() {
+                hover(points[i], 1, rndColors.c);
+            }, this);
+            
+            points[i].g.events.onInputOut.add(function() {
+                hover(points[i], points[i].o, rndColors.c);
+            }, this);
 
-        for (let i in points) {
-            let label = game.add.text(points[i].x, points[i].y + points[i].r / 1.5 + 10, points[i].text, { font: '12px Slabo', fill: '#fff'});
+            let label = game.add.text(points[i].x, points[i].y + points[i].r / 1.5 + 5, points[i].text, { font: `${points[i].ts}px Slabo`, fill: `#${Number(rndColors.l).toString(16)}`});
             label.x = points[i].x - label.width / 2;
         }
 
+        
+        this.drawUpgradeMenuButton(300, 100, rndColors.c, rndColors.l);
+
         /****** */
+    },
+
+    drawUpgradeMenuButton: function(x, y, c, f) {
+        colors = this.getColors();
+        let r = 40;
+
+        let points = [
+            {x: x, y: y - r / 3.5, o: 0.2},
+            {x: x - r / 3.5, y: y, o: 0.4},
+            {x: x + r / 3.5, y: y, o: 0.6}
+        ]
+
+        let graphics = game.add.graphics(0, 0);
+        graphics.inputEnabled = true;
+        graphics.input.useHandCursor = true;
+
+        function draw(o) {
+            graphics.clear();
+            for (let i in points) {
+                graphics.beginFill(c, points[i].o + o);
+                graphics.drawCircle(points[i].x, points[i].y, r);
+                graphics.endFill();
+            }
+        }
+
+        draw(0);
+
+        graphics.events.onInputOver.add(function() {
+            draw(0.4);
+        }, this);
+
+        graphics.events.onInputOut.add(function() {
+            draw(0);
+        }, this);
+
+        let label = game.add.text(x, y + 10, "U P G R A D E S", { font: `12px Slabo`, fill: `#${Number(f).toString(16)}`});
+        label.x = x - label.width / 2;
     }
 }

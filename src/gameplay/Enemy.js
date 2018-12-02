@@ -1,23 +1,26 @@
-let Enemy = function (x, y) {
-    Phaser.Sprite.call(this, game, x, y, "EnemySprite", 1);
+let Enemy = function (x, y, type) {
+    
+    this.__type = type;
+    Phaser.Sprite.call(this, game, x, y, `EnemySprite${this.__type}`, 1);
 
-    this.acc = {
-        a: 400,
-        b: 800
-    };
+    this.acc = EnemySpecs[this.__type].acc;
+    this.hp = EnemySpecs[this.__type].hp;
+    this.damage = EnemySpecs[this.__type].damage;
+    this.soulValue = EnemySpecs[this.__type].soulValue;
 
-    this.bulletVel = 250;
+    this.bulletVel = EnemySpecs[this.__type].bulletVel;
 
     this.playerLastSeen = null;
-    this.lookForPlayerRadius = 250;
+    this.lookForPlayerRadius = EnemySpecs[this.__type].lookForPlayerRadius;
     this.lookForPlayerShoot = null;
 
     this.bullets = game.add.group();
     this.bullets.enableBody = true;
     this.bullets.physicsBodyType = Phaser.Physics.ARCADE;
-    this.bullets.createMultiple(10, "EnemyBullet")
+    this.bullets.createMultiple(10, `EnemyBullet${this.__type}`);
     this.bullets.setAll('checkWorldBounds', true);
     this.bullets.setAll('outOfBoundsKill', true);
+    this.bullets.setAll('damage', this.damage);
 
     this.bulletQueue = [];
     
@@ -32,15 +35,16 @@ let Enemy = function (x, y) {
     
     game.add.existing(this);
 
-    game.time.events.add(Phaser.Timer.SECOND * 1, this.shoot, this);
+    this.timer = game.time.events.add(Phaser.Timer.SECOND * 1, this.shoot, this);
+    this.bulletTimer = null;
 }
 
 Enemy.prototype = Object.create(Phaser.Sprite.prototype);
 Enemy.prototype.constructor = Enemy;
 
-Enemy.prototype.update = function() {
+Enemy.prototype.bulletUpdate = function(coords) {
     for (let i in this.bulletQueue) {
-        game.physics.arcade.moveToXY(this.bulletQueue[i], this.lookForPlayerShoot.x, this.lookForPlayerShoot.y, this.bulletVel);
+        game.physics.arcade.moveToXY(this.bulletQueue[i], coords.x, coords.y, this.bulletVel);
     }
 }
 
@@ -58,18 +62,37 @@ Enemy.prototype.lookForPlayer = function(coords) {
 
 Enemy.prototype.shoot = function() {
     let bullet = this.bullets.getFirstDead();
-    bullet.reset(this.x, this.y);
+    bullet.reset(this.x + 25, this.y + 25);
     
-    game.time.events.add(Phaser.Timer.SECOND * game.rnd.between(3, 5), function() {
+    this.bulletTimer = game.time.events.add(Phaser.Timer.SECOND * game.rnd.between(3, 5), function() {
         let tween = game.add.tween(bullet).to( { alpha: 0 }, 300, "Linear", true);
         bullet.enableBody = false;
         tween.onComplete.add(function() {
             bullet.alpha = 1;
             bullet.enableBody = true;
             bullet.kill();
-        }, this)
+        }, this);
     }, this);
 
     this.bulletQueue.push(bullet);
-    game.time.events.add(Phaser.Timer.SECOND * game.rnd.between(4, 8), this.shoot, this);
+    this.timer = game.time.events.add(Phaser.Timer.SECOND * game.rnd.between(EnemySpecs[this.__type].bulletTimeRnd.min, EnemySpecs[this.__type].bulletTimeRnd.max), this.shoot, this);
+}
+
+Enemy.prototype.__revive = function() {
+    this.alpha = 0;
+    this.enableBody = false;
+
+    let tween = game.add.tween(this).to( { alpha: 1 }, 600, "Linear", true);
+    tween.onComplete.add(function() {
+        this.enableBody = true;
+    }, this);
+}
+
+Enemy.prototype.__kill = function() {
+    game.time.events.remove(this.timer);
+    let tween = game.add.tween(this).to( { alpha: 0 }, 300, "Linear", true);
+    this.enableBody = false;
+    tween.onComplete.add(function() {
+        this.kill();
+    }, this);
 }

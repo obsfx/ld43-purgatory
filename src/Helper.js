@@ -49,6 +49,15 @@ let Helper = {
             graphics.drawCircle(k[i].x, k[i].y, (Math.floor(Math.random() * 12)));
             graphics.endFill();
         }
+
+        return rndColors;
+    },
+
+    createStageText: function(colors, text, x, y) {
+        let label = game.add.text(x, y, text, { font: `18px Slabo`, fill: `#${Number(colors.l).toString(16)}`});
+        label.x = x - label.width / 2;
+        label.fixedToCamera = true;
+        return label;
     },
 
     createArenaGraphics: function() {

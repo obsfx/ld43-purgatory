@@ -6,6 +6,9 @@ let Player = function () {
     this.fireRate = 150;
     this.nextFire = 0;
 
+    this.hp = 100;
+    this.damage = 10;
+
     this.controls = {
         up: Phaser.Keyboard.W,
         down: Phaser.Keyboard.S,
@@ -86,6 +89,17 @@ Player.prototype.fire = function() {
         let bullet = this.bullets.getFirstDead();
         bullet.reset(this.tail.x + 3, this.tail.y + 3);
         game.physics.arcade.moveToPointer(bullet, this.vel * 2);
-        game.camera.shake(0.015, 40);
+        //game.camera.shake(0.015, 40);
+    }
+}
+
+Player.prototype.checkForCircle = function(circleCoords, g) {
+    let d = Phaser.Math.distance(circleCoords.x, circleCoords.y, this.x + 25, this.y + 25) - g.width / 2;
+    if (d < 0) {
+        g.alpha = 0.6;
+        Game.escape = true;
+    } else {
+        g.alpha = 0.2;
+        Game.escape = false;
     }
 }

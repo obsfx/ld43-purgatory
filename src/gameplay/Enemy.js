@@ -32,11 +32,12 @@ let Enemy = function (x, y, type) {
     this.body.collideWorldBounds = true;
     this.body.fixedRotation = true;
     this.body.setCircle(20, 10, 10);
-    
-    game.add.existing(this);
+
+    this.body.bounce.setTo(0.1);
 
     this.timer = game.time.events.add(Phaser.Timer.SECOND * 1, this.shoot, this);
     this.bulletTimer = null;
+    game.add.existing(this);
 }
 
 Enemy.prototype = Object.create(Phaser.Sprite.prototype);

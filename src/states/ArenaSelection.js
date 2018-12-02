@@ -1,6 +1,5 @@
 let ArenaSelection = {
     create: function() {
-        console.log("game ArenaSelection");
         
         this.UI = new UI(Screen.Width, 100);
         this.UI.bgFadeIn(function(){});

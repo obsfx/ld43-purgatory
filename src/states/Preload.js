@@ -2,7 +2,6 @@ let Preload = {
     preload : function() {
         for (let i in AssetsPath.Preloads) {
             if (AssetsPath.Preloads[i].type == "spritesheet") {
-                console.log("SSSSSSSS")
                 game.load.spritesheet(
                     AssetsPath.Preloads[i].key, 
                     AssetsPath.Preloads[i].path, 
@@ -20,8 +19,9 @@ let Preload = {
     },
 
     create: function() {
-        console.log("game preload");
-        game.state.start("ArenaSelection");
-        //game.state.start("ArenaSelection");
+        this.UI = new UI(Screen.Width, 100);
+        this.UI.createStageText(`L O A D I N G`, Screen.Width / 2, Screen.Height / 2);
+
+        this.UI.bgFadeOut(function(){game.state.start("MainMenu");})
     }
 }

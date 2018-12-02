@@ -42,38 +42,38 @@ const config = {
 
 const EnemySpecs = [
     {
-        acc: {a: 400, b: 800},
-        bulletVel: 250,
-        lookForPlayerRadius: 250,
-        bulletTimeRnd: {min: 4, max: 8},
-        damage: 3,
-        hp: 150,
-        soulValue: 15,
-    },
-
-    {
-        acc: {a: 400, b: 800},
-        bulletVel: 265,
+        acc: {a: 500, b: 800},
+        bulletVel: 280,
         lookForPlayerRadius: 300,
-        bulletTimeRnd: {min: 3, max: 7},
+        bulletTimeRnd: {min: 4, max: 8},
         damage: 10,
-        hp: 250,
-        soulValue: 30,
+        hp: 110,
+        soulValue: 40,
     },
 
     {
-        acc: {a: 400, b: 800},
-        bulletVel: 275,
-        lookForPlayerRadius: 320,
+        acc: {a: 530, b: 800},
+        bulletVel: 300,
+        lookForPlayerRadius: 350,
+        bulletTimeRnd: {min: 3, max: 7},
+        damage: 30,
+        hp: 330,
+        soulValue: 120,
+    },
+
+    {
+        acc: {a: 560, b: 800},
+        bulletVel: 320,
+        lookForPlayerRadius: 400,
         bulletTimeRnd: {min: 2, max: 7},
-        damage: 20,
-        hp: 600,
-        soulValue: 60,
+        damage: 60,
+        hp: 666,
+        soulValue: 300,
     }
 ]
 
 let Game = {
-    souls: 400,
+    souls: 350,
     baseSouls: 200,
     baseSacrifice: 100,
     sacrificedSouls: 0,

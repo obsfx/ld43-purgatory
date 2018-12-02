@@ -1,7 +1,6 @@
 let MainState = {
     
     create: function() {
-        console.log("game MainState");
         this.stageWH = 1500;
         this.wave = 1;
         this.wavemulp = 1;
@@ -25,16 +24,19 @@ let MainState = {
         this.stageCircle.alpha = 0.2;
 
         this._player = new Player(); 
-        this._player.damage = Game.D * 9;
+        this._player.damage = Game.D * 11;
 
         this.UI.bgFadeIn(function() {
             this.createEnemies(this.mainFR - this.wavemulp * this.waveinc);
 
             this.stageSoulsText = this.UI.createStageText(`S O U L S : ${Game.souls}`, 80, 30);
             this.stageWaveText = this.UI.createStageText(`W A V E : ${this.wave}`, 250, 30);
-            this.stageArenaEscapeText = this.UI.createStageText(`P R E S S  [ R ]  T O \nE S C A P E  F R O M  A R E N A`, this.stageWH / 2 + 10, this.stageWH / 2 - 10);
+            this.stageArenaEscapeText = this.UI.createStageText(`P R E S S  [ R ]  T O`, this.stageWH / 2, this.stageWH / 2 - 20);
+            this.stageArenaEscapeText2 = this.UI.createStageText(`E S C A P E  F R O M  A R E N A`, this.stageWH / 2, this.stageWH / 2);
             this.stageArenaEscapeText.fixedToCamera = false;
             this.stageArenaEscapeText.alpha = 0.5;
+            this.stageArenaEscapeText2.fixedToCamera = false;
+            this.stageArenaEscapeText2.alpha = 0.5;
         }.bind(this));
     },
 
@@ -98,7 +100,7 @@ let MainState = {
             enemy.__kill();
 
             this.enemies.splice(this.enemies.indexOf(enemy), 1);
-            console.log(this.enemies);
+            //console.log(this.enemies);
 
             if (this.enemies.length < Math.floor(this.enemyAmount * this.enemyAmount / 2)) {
                 if (this.mainFR - this.wavemulp * (this.waveinc + 1) > 0) this.waveinc += 1;
@@ -112,13 +114,14 @@ let MainState = {
     soul_PlayerOverlapHandler: function(player, soul) {
         Game.souls += soul.value;
         this.updateSoulLabel();
-        console.log(Game.souls);
+        //console.log(Game.souls);
         soul.__collected();
     },
 
     player_EnemyOverlapHandler: function(player, enemy) {
         Game.souls -= enemy.damage;
         game.camera.flash(0xf21818, 80, 10, 0.4);
+        if (Game.souls <= 0) {this.UI.bgFadeOut(function() { game.state.start("GameOver") });}
         this.updateSoulLabel();
     },
 
@@ -126,6 +129,7 @@ let MainState = {
         bullet.kill();
         Game.souls -= bullet.damage;
         game.camera.flash(0xf21818, 80, 10, 0.4);
+        if (Game.souls <= 0) {this.UI.bgFadeOut(function() { game.state.start("GameOver") });}
         this.updateSoulLabel();
     },
 

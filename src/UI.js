@@ -296,11 +296,13 @@ UI.prototype.sacrifice = function() {
             Game.D += 1;
             Game.uCount -= 300;
             this.soulLevelText.text = `S O U L  L E V E L : ${Game.D}`;
-            console.log(Game.uCount);
+            //console.log(Game.uCount);
         }
 
-        if (Game.currentArena + 1 == Game.arenaReq.length - 1) {
-            console.log("win");
+        if (Game.currentArena + 1 == Game.arenaReq.length - 1 && Game.arenaReq[Game.currentArena + 1] <= Game.sacrificedSouls) {
+            this.bgFadeOut(function(){
+                game.state.start("Win");
+            });
         } else if (Game.arenaReq[Game.currentArena + 1] <= Game.sacrificedSouls) {
             Game.currentArena += 1;
             Game.arenaStatus[Game.currentArena] = true;

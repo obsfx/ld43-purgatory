@@ -2,7 +2,7 @@ let Soul = function (x, y, val) {
     Phaser.Sprite.call(this, game, x, y, "Soul");
 
     this.value = val;
-    this.vel = 300;
+    this.vel = 450;
 
     game.physics.arcade.enable(this);
 

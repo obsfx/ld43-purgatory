@@ -15,11 +15,13 @@ const AssetsPath = {
         {type: "spritesheet", key: "PlayerSprite", path: `${AssetsDir}/playerSprite.png`, w: 64, h: 64, f: 9},
         {type: "spritesheet", key: "EnemySprite0", path: `${AssetsDir}/enemySprite0.png`, w: 64, h: 64, f: 10},
         {type: "spritesheet", key: "EnemySprite1", path: `${AssetsDir}/enemySprite1.png`, w: 64, h: 64, f: 10},
+        {type: "spritesheet", key: "EnemySprite2", path: `${AssetsDir}/enemySprite2.png`, w: 64, h: 64, f: 10},
         {type: "image", key: "Soul", path: `${AssetsDir}/soul.png`},
         {type: "image", key: "PlayerTail", path: `${AssetsDir}/tail.png`},
         {type: "image", key: "PlayerBullet", path: `${AssetsDir}/bullet.png`},
         {type: "image", key: "EnemyBullet0", path: `${AssetsDir}/enemyBullet0.png`},
-        {type: "image", key: "EnemyBullet1", path: `${AssetsDir}/enemyBullet1.png`}
+        {type: "image", key: "EnemyBullet1", path: `${AssetsDir}/enemyBullet1.png`},
+        {type: "image", key: "EnemyBullet2", path: `${AssetsDir}/enemyBullet2.png`}
     ]
 }
 
@@ -41,27 +43,43 @@ const config = {
 const EnemySpecs = [
     {
         acc: {a: 400, b: 800},
-        bulletVel: 220,
+        bulletVel: 250,
         lookForPlayerRadius: 250,
         bulletTimeRnd: {min: 4, max: 8},
-        damage: 2,
-        hp: 100,
-        soulValue: 10,
+        damage: 3,
+        hp: 150,
+        soulValue: 15,
     },
 
     {
         acc: {a: 400, b: 800},
-        bulletVel: 250,
-        lookForPlayerRadius: 250,
-        bulletTimeRnd: {min: 4, max: 8},
-        damage: 2,
-        hp: 100,
-        soulValue: 10,
+        bulletVel: 265,
+        lookForPlayerRadius: 300,
+        bulletTimeRnd: {min: 3, max: 7},
+        damage: 10,
+        hp: 250,
+        soulValue: 30,
+    },
+
+    {
+        acc: {a: 400, b: 800},
+        bulletVel: 275,
+        lookForPlayerRadius: 320,
+        bulletTimeRnd: {min: 2, max: 7},
+        damage: 20,
+        hp: 600,
+        soulValue: 60,
     }
 ]
 
 let Game = {
-    souls: 0,
+    souls: 400,
+    baseSouls: 200,
+    baseSacrifice: 100,
+    sacrificedSouls: 0,
+    uCount: 0,
     currentArena: 0,
-    escape: true
+    arenaStatus: [true, false, false, false],
+    arenaReq: [0, 666, 4366, 6666],
+    D: 1
 }

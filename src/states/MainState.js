@@ -10,35 +10,32 @@ let MainState = {
         this.enemies = [];
         this.souls = [];
 
-        this.stageColors = Helper.createStateBackground(game, this.stageWH, 150);
-
         game.world.setBounds(0, 0, this.stageWH, this.stageWH);
         game.physics.startSystem(Phaser.Physics.ARCADE);
-        this.stageSoulsText = Helper.createStageText(this.stageColors, `S O U L S : ${Game.souls}`, 80, 30);
-        this.stageWaveText = Helper.createStageText(this.stageColors, `W A V E : ${this.wave}`, 250, 30);
-        this.stageArenaEscapeText = Helper.createStageText(this.stageColors, `P R E S S  [ R ]  T O \nE S C A P E  F R O M  A R E N A`, this.stageWH / 2 + 10, this.stageWH / 2 - 10);
-        this.stageArenaEscapeText.fixedToCamera = false;
-        this.stageArenaEscapeText.alpha = 0.5;
 
-        this.stageFadeBG = game.add.graphics(0, 0);
-        this.stageFadeBG.fixedToCamera = true;
-        this.stageFadeBG.beginFill(0x000000, 1);
-        this.stageFadeBG.lineStyle(0, 0x0000FF, 1);
-        this.stageFadeBG.drawRect(0, 0, Screen.Width, Screen.Height);
+        this.UI = new UI(this.stageWH, 150);
+
+        this.UI.createStateBackground();
 
         this.stageCircle = game.add.graphics(0, 0);
-        this.stageCircle.beginFill(this.stageColors.c, 0.8);
-        this.stageCircle.lineStyle(3, this.stageColors.l, 0.8);
+        this.stageCircle.beginFill(this.UI.rndColors.c, 0.8);
+        this.stageCircle.lineStyle(3, this.UI.rndColors.l, 0.8);
         this.stageCircle.drawCircle(this.stageWH / 2, this.stageWH / 2, 400);
         this.stageCircle.endFill();
         this.stageCircle.alpha = 0.2;
 
         this._player = new Player(); 
+        this._player.damage = Game.D * 9;
 
-        let tween = game.add.tween(this.stageFadeBG).to( { alpha: 0 }, 400, "Linear", true);
-        tween.onComplete.add(function() {
-            this.createEnemies(this.mainFR - this.wavemulp * this.waveinc); 
-        }, this);
+        this.UI.bgFadeIn(function() {
+            this.createEnemies(this.mainFR - this.wavemulp * this.waveinc);
+
+            this.stageSoulsText = this.UI.createStageText(`S O U L S : ${Game.souls}`, 80, 30);
+            this.stageWaveText = this.UI.createStageText(`W A V E : ${this.wave}`, 250, 30);
+            this.stageArenaEscapeText = this.UI.createStageText(`P R E S S  [ R ]  T O \nE S C A P E  F R O M  A R E N A`, this.stageWH / 2 + 10, this.stageWH / 2 - 10);
+            this.stageArenaEscapeText.fixedToCamera = false;
+            this.stageArenaEscapeText.alpha = 0.5;
+        }.bind(this));
     },
 
     update: function() {
@@ -61,7 +58,7 @@ let MainState = {
             this.souls[i].moveToPlayer({x: this._player.x + 25, y: this._player.y + 25});
         }
 
-        this._player.checkForCircle({x: this.stageWH / 2, y: this.stageWH / 2}, this.stageCircle);
+        this._player.checkForCircle({x: this.stageWH / 2, y: this.stageWH / 2}, this.stageCircle, this.UI);
 
     },
 

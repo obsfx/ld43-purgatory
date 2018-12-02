@@ -3,17 +3,16 @@ let Player = function () {
 
     this.vel = 250;
     this.tailVel = 160;
-    this.fireRate = 150;
+    this.fireRate = 110;
     this.nextFire = 0;
-
-    this.hp = 100;
     this.damage = 10;
 
     this.controls = {
         up: Phaser.Keyboard.W,
         down: Phaser.Keyboard.S,
         left: Phaser.Keyboard.A,
-        right: Phaser.Keyboard.D
+        right: Phaser.Keyboard.D,
+        R: Phaser.Keyboard.R
     }
 
     this.tail = game.add.sprite(game.world.centerX, game.world.centerY, 'PlayerTail');
@@ -93,13 +92,18 @@ Player.prototype.fire = function() {
     }
 }
 
-Player.prototype.checkForCircle = function(circleCoords, g) {
+Player.prototype.checkForCircle = function(circleCoords, g, ui) {
     let d = Phaser.Math.distance(circleCoords.x, circleCoords.y, this.x + 25, this.y + 25) - g.width / 2;
     if (d < 0) {
         g.alpha = 0.6;
-        Game.escape = true;
+        if (game.input.keyboard.isDown(this.controls.R)) {
+            this.body.enable = false;
+
+            ui.bgFadeOut(function() {
+                game.state.start("ArenaSelection")
+            });
+        }
     } else {
         g.alpha = 0.2;
-        Game.escape = false;
     }
 }

@@ -86,6 +86,7 @@ let Game = {
     sacrificedSouls: 0,
     uCount: 0,
     currentArena: 0,
+    activeArena: 0,
     arenaStatus: [true, false, false, false],
     arenaReq: [0, 666, 4366, 6666],
     D: 1,

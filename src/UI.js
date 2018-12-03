@@ -186,6 +186,7 @@ UI.prototype.createArenaGraphics = function() {
             if (Game.arenaStatus[points[i].k]) {
                 color = this.rndColors.c;
                 points[i].g.events.onInputDown.add(function() {
+                    Game.activeArena = points[i].k;
                     this.bgFadeOut(function() {
                         game.state.start("MainState");
                     })

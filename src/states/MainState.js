@@ -85,7 +85,7 @@ let MainState = {
                 if (r.x < 0) r.x *= -1;
                 if (r.y < 0) r.y *= -1;
 
-                this.enemies.push(new Enemy(r.x, r.y, Game.currentArena));
+                this.enemies.push(new Enemy(r.x, r.y, Game.activeArena));
                 this.enemies[this.enemies.length - 1].lookForPlayerShoot = {x: this._player.x, y: this._player.y};
                 this.enemies[this.enemies.length - 1].__revive();
             }

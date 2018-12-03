@@ -80,7 +80,7 @@ const EnemySpecs = [
 ]
 
 let Game = {
-    souls: 350,
+    souls: 400,
     baseSouls: 200,
     baseSacrifice: 100,
     sacrificedSouls: 0,

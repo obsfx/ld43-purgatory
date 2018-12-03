@@ -12,7 +12,7 @@ let MainMenu = {
         
         game.add.text(20, 460, "C R E A T E D  I N  4 8  H O U R S", { font: `24px Slabo`, fill: `#${Number(this.UI.rndColors.l).toString(16)}`});
         game.add.text(20, 485, "F O R  L U D U M  D A R E  4 3  B Y  @OBSFX", { font: `24px Slabo`, fill: `#${Number(this.UI.rndColors.l).toString(16)}`});
-
+        game.add.text(20, 510, "T W I T T E R . C O M / O B S F X", { font: `12px Slabo`, fill: `#${Number(this.UI.rndColors.l).toString(16)}`});
 
         this.UI.createStageText(`Y O U  C A N  P R E S S  [ R ]  T O  S T A R T  T H E  G A M E`, Screen.Width / 2, Screen.Height / 2 + 250);
     },

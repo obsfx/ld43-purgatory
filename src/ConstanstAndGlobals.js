@@ -53,9 +53,9 @@ const EnemySpecs = [
         bulletVel: 280,
         lookForPlayerRadius: 300,
         bulletTimeRnd: {min: 4, max: 8},
-        damage: 15,
-        hp: 160,
-        soulValue: 40,
+        damage: 18,
+        hp: 140,
+        soulValue: 35,
     },
 
     {
@@ -65,7 +65,7 @@ const EnemySpecs = [
         bulletTimeRnd: {min: 3, max: 7},
         damage: 40,
         hp: 450,
-        soulValue: 120,
+        soulValue: 85,
     },
 
     {
@@ -74,8 +74,8 @@ const EnemySpecs = [
         lookForPlayerRadius: 400,
         bulletTimeRnd: {min: 2, max: 7},
         damage: 90,
-        hp: 866,
-        soulValue: 300,
+        hp: 1066,
+        soulValue: 290,
     }
 ]
 

@@ -88,6 +88,7 @@ Player.prototype.fire = function() {
         let bullet = this.bullets.getFirstDead();
         bullet.reset(this.tail.x + 3, this.tail.y + 3);
         game.physics.arcade.moveToPointer(bullet, this.vel * 2);
+        Game.fire.restart("", 0, 0.1, false);
         //game.camera.shake(0.015, 40);
     }
 }

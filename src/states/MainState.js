@@ -12,6 +12,9 @@ let MainState = {
         game.world.setBounds(0, 0, this.stageWH, this.stageWH);
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
+        Game.main_music.stop();
+        Game.arena_music.restart("", 0.1, 0.1, true);
+
         this.UI = new UI(this.stageWH, 150);
 
         this.UI.createStateBackground();
@@ -92,11 +95,12 @@ let MainState = {
     playerBullet_EnemyOverlapHandler: function(enemy, bullet) {
         bullet.kill();
         enemy.hp -= this._player.damage;
+        Game.enemytake.restart("", 0, 0.2, false);
         if (enemy.hp <= 0) {
             let __soul = new Soul(enemy.x, enemy.y, enemy.soulValue);
             __soul.__revive();
             this.souls.push(__soul);
-            
+            Game.enemydestroy.restart("", 0, 0.2, false);
             enemy.__kill();
 
             this.enemies.splice(this.enemies.indexOf(enemy), 1);
@@ -116,10 +120,12 @@ let MainState = {
         this.updateSoulLabel();
         //console.log(Game.souls);
         soul.__collected();
+        Game.collect.restart("", 0, 0.2, false);
     },
 
     player_EnemyOverlapHandler: function(player, enemy) {
         Game.souls -= enemy.damage;
+        Game.takedmg.restart("", 0, 0.2, false);
         game.camera.flash(0xf21818, 80, 10, 0.4);
         if (Game.souls <= 0) {this.UI.bgFadeOut(function() { game.state.start("GameOver") });}
         this.updateSoulLabel();
@@ -128,6 +134,7 @@ let MainState = {
     player_EnemyBulletOverlapHandler: function(player, bullet) {
         bullet.kill();
         Game.souls -= bullet.damage;
+        Game.takedmg.restart("", 0, 0.2, false);
         game.camera.flash(0xf21818, 80, 10, 0.4);
         if (Game.souls <= 0) {this.UI.bgFadeOut(function() { game.state.start("GameOver") });}
         this.updateSoulLabel();

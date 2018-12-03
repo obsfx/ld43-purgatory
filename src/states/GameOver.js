@@ -11,6 +11,9 @@ let GameOver = {
         this.UI.createStageText(`T H A N K  Y O U  F O R  P L A Y I N G  T H I S  G A M E  !`, Screen.Width / 2, Screen.Height / 2 + 25);
         this.UI.createStageText(`Y O U  C A N  P R E S S  [ R ]  T O  P L A Y  A G A I N`, Screen.Width / 2, Screen.Height / 2 + 50);
 
+        Game.main_music.stop();
+        Game.arena_music.stop();
+
         Game = {
             souls: 400,
             baseSouls: 200,
@@ -26,7 +29,7 @@ let GameOver = {
 
     update: function() {
         if (game.input.keyboard.isDown(Phaser.Keyboard.R)) {
-            this.UI.bgFadeOut(function(){game.state.start("MainMenu");})
+            this.UI.bgFadeOut(function(){game.state.start("Preload");})
         }
     }
 

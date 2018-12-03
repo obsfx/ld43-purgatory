@@ -17,5 +17,8 @@ let ArenaSelection = {
 
         this.UI.stageHeadText = this.UI.createStageText(`S E L E C T  A R E N A`, Screen.Width / 2, 30);
         this.UI.drawUpgradeMenuButton(Screen.Width / 2, 100);
+
+        Game.arena_music.stop();
+        if (!Game.main_music.isPlaying) Game.main_music.restart("", 0, 0.5, true);
     }
 }

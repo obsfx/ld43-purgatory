@@ -291,6 +291,7 @@ UI.prototype.sacrifice = function() {
         Game.souls -= s;
         Game.sacrificedSouls += s; 
         Game.uCount += s;
+        Game.collect.restart("", 0, 0.2, false);
 
         if (Game.uCount >= 300) {
             Game.D += 1;

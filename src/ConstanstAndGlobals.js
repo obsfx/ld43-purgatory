@@ -21,7 +21,14 @@ const AssetsPath = {
         {type: "image", key: "PlayerBullet", path: `${AssetsDir}/bullet.png`},
         {type: "image", key: "EnemyBullet0", path: `${AssetsDir}/enemyBullet0.png`},
         {type: "image", key: "EnemyBullet1", path: `${AssetsDir}/enemyBullet1.png`},
-        {type: "image", key: "EnemyBullet2", path: `${AssetsDir}/enemyBullet2.png`}
+        {type: "image", key: "EnemyBullet2", path: `${AssetsDir}/enemyBullet2.png`},
+        {type: "audio", key: "arena", path: [`${AssetsDir}/arena_bg.mp3`, `${AssetsDir}/arena_bg.ogg`]},
+        {type: "audio", key: "main", path: [`${AssetsDir}/main_bg.mp3`, `${AssetsDir}/main_bg.ogg`]},
+        {type: "audio", key: "collect", path: `${AssetsDir}/collect.wav`},
+        {type: "audio", key: "takedmg", path: `${AssetsDir}/takedmg.wav`},
+        {type: "audio", key: "enemydestroy", path: `${AssetsDir}/enemydestroy.wav`},
+        {type: "audio", key: "enemytake", path: `${AssetsDir}/enemytake.wav`},
+        {type: "audio", key: "fire", path: `${AssetsDir}/fire.wav`}
     ]
 }
 
@@ -46,8 +53,8 @@ const EnemySpecs = [
         bulletVel: 280,
         lookForPlayerRadius: 300,
         bulletTimeRnd: {min: 4, max: 8},
-        damage: 10,
-        hp: 110,
+        damage: 15,
+        hp: 160,
         soulValue: 40,
     },
 
@@ -56,8 +63,8 @@ const EnemySpecs = [
         bulletVel: 300,
         lookForPlayerRadius: 350,
         bulletTimeRnd: {min: 3, max: 7},
-        damage: 30,
-        hp: 330,
+        damage: 40,
+        hp: 450,
         soulValue: 120,
     },
 
@@ -66,8 +73,8 @@ const EnemySpecs = [
         bulletVel: 320,
         lookForPlayerRadius: 400,
         bulletTimeRnd: {min: 2, max: 7},
-        damage: 60,
-        hp: 666,
+        damage: 90,
+        hp: 866,
         soulValue: 300,
     }
 ]
@@ -81,5 +88,7 @@ let Game = {
     currentArena: 0,
     arenaStatus: [true, false, false, false],
     arenaReq: [0, 666, 4366, 6666],
-    D: 1
+    D: 1,
+    main_music: null,
+    arena_music: null,
 }
